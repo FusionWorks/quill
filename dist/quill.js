@@ -4672,6 +4672,7 @@ var Link = function (_Inline) {
       value = this.sanitize(value);
       node.setAttribute('href', value);
       node.setAttribute('target', '_blank');
+      node.setAttribute('rel', 'link');
       return node;
     }
   }, {
@@ -9807,6 +9808,7 @@ var SnowTooltip = function (_BaseTooltip) {
             var preview = _link2.default.formats(link.domNode);
             _this3.preview.textContent = preview;
             _this3.preview.setAttribute('href', preview);
+            _this3.preview.setAttribute('rel', 'link');
             _this3.show();
             _this3.position(_this3.quill.getBounds(_this3.linkRange));
             return;

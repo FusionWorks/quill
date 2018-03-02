@@ -7,6 +7,7 @@ class Link extends Inline {
     value = this.sanitize(value);
     node.setAttribute('href', value);
     node.setAttribute('target', '_blank');
+    node.setAttribute('rel', 'link');
     return node;
   }
 
