@@ -1,0 +1,23 @@
+{
+  "name": "quill",
+  "description": "Your powerful, rich text editor",
+  "main": "dist/quill.js",
+  "authors": [
+    "Jason Chen <jhchen7@gmail.com>"
+  ],
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "editor",
+    "rich",
+    "text",
+    "wysiwyg"
+  ],
+  "homepage": "https://github.com/FusionWorks/quill",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
