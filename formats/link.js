@@ -5,6 +5,7 @@ class Link extends Inline {
   static create(value) {
     let node = super.create(value);
     value = this.sanitize(value);
+    value = this.makeURLValid(value);
     node.setAttribute('href', value);
     node.setAttribute('target', '_blank');
     node.setAttribute('rel', 'link');
@@ -19,9 +20,14 @@ class Link extends Inline {
     return sanitize(url, this.PROTOCOL_WHITELIST) ? url : this.SANITIZED_URL;
   }
 
+  static makeURLValid(url) {
+    return makeURLValid(url)
+  }
+
   format(name, value) {
     if (name !== this.statics.blotName || !value) return super.format(name, value);
     value = this.constructor.sanitize(value);
+    value = this.constructor.makeURLValid(value);
     this.domNode.setAttribute('href', value);
   }
 }
@@ -36,6 +42,16 @@ function sanitize(url, protocols) {
   anchor.href = url;
   let protocol = anchor.href.slice(0, anchor.href.indexOf(':'));
   return protocols.indexOf(protocol) > -1;
+}
+
+function makeURLValid(url) {
+  if (!(/^http?:\/\//i.test(url))){
+    if (/^https?:\/\//i.test(url)) {
+      return url
+    }
+    return "https://" + url
+  }
+  return url
 }
 
 

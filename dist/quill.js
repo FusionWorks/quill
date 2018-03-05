@@ -4663,6 +4663,7 @@ var Link = function (_Inline) {
     value: function format(name, value) {
       if (name !== this.statics.blotName || !value) return _get(Link.prototype.__proto__ || Object.getPrototypeOf(Link.prototype), 'format', this).call(this, name, value);
       value = this.constructor.sanitize(value);
+      value = this.constructor.makeURLValid(value);
       this.domNode.setAttribute('href', value);
     }
   }], [{
@@ -4670,6 +4671,7 @@ var Link = function (_Inline) {
     value: function create(value) {
       var node = _get(Link.__proto__ || Object.getPrototypeOf(Link), 'create', this).call(this, value);
       value = this.sanitize(value);
+      value = this.makeURLValid(value);
       node.setAttribute('href', value);
       node.setAttribute('target', '_blank');
       node.setAttribute('rel', 'link');
@@ -4684,6 +4686,11 @@ var Link = function (_Inline) {
     key: 'sanitize',
     value: function sanitize(url) {
       return _sanitize(url, this.PROTOCOL_WHITELIST) ? url : this.SANITIZED_URL;
+    }
+  }, {
+    key: 'makeURLValid',
+    value: function makeURLValid(url) {
+      return _makeURLValid(url);
     }
   }]);
 
@@ -4700,6 +4707,16 @@ function _sanitize(url, protocols) {
   anchor.href = url;
   var protocol = anchor.href.slice(0, anchor.href.indexOf(':'));
   return protocols.indexOf(protocol) > -1;
+}
+
+function _makeURLValid(url) {
+  if (!/^http?:\/\//i.test(url)) {
+    if (/^https?:\/\//i.test(url)) {
+      return url;
+    }
+    return "https://" + url;
+  }
+  return url;
 }
 
 exports.default = Link;
